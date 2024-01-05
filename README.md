@@ -4,3 +4,5 @@
 28/12 : j'ai modifier un peu D1.sh, mais le script n'est toujours pas finis.
 
 30/12 : J'ai ajouté une première version du code main en shell qui prend en compte les différents arguments. Il n'est pas fini et il va falloir le modifier.
+
+05/01 : nous n'avons pas travailler sur le projet durant ces derniers jours.
