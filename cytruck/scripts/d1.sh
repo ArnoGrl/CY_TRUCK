@@ -7,9 +7,6 @@ d1() {
 
     # Compter les trajets par conducteur
     time (awk -F';' '{print $6}' "$file" | sort | uniq -c | sort -rn | head -10 >"$output_file" && echo "La commande a pris $(date +%s.%N -d@$SECONDS) secondes")
-    echo -e "\nliste des 10 plus gros conducteur : \n"
-
-    cat conducteur_counts.txt
 
     gnuplot <<EOF
 set terminal pngcairo enhanced font "arial,10" size 800,600
@@ -26,4 +23,6 @@ set boxwidth 0.5 relative
 set key off
 plot '$output_file' using 1:xtic(2) with boxes title ''
 EOF
+
+    convert 'conducteur_counts_horizontal.png' -rotate 90 out.jpg
 }

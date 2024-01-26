@@ -49,7 +49,7 @@ validation=1
 while [ "$#" -gt 0 ]; do
     case "$1" in
     -d1)
-        d1
+        d1 "$fichier_entree"
         validation=0
         ;;
     -d2)
