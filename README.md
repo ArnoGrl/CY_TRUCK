@@ -6,3 +6,5 @@
 30/12 : J'ai ajouté une première version du code main en shell qui prend en compte les différents arguments. Il n'est pas fini et il va falloir le modifier.
 
 05/01 : nous n'avons pas travailler sur le projet durant ces derniers jours.
+
+26/01 : modification de la structure main.sh, il faut maintenant faire tout les traitement.
