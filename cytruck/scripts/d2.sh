@@ -5,7 +5,7 @@ d2() {
     output_file="total_distance.txt"
 
     #Total distance made by each drivers
-    time(awk -F';' '{distance[$5]+=$6} END {for(drivers in distance) print distance[drivers], drivers}' "$file" | sort -rn | head -10 >"$output_file" && echo "La commande a pris $(date +%s.%N -d@$SECONDS) secondes")
+    time(awk -F';' '{distance[$6]+=$5} END {for(drivers in distance) print distance[drivers], drivers}' "$file" | sort -rn | head -10 >"$output_file" && echo "La commande a pris $(date +%s.%N -d@$SECONDS) secondes")
 
     #create the graphic
     gnuplot <<EOF
