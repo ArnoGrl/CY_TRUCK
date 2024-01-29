@@ -12,3 +12,5 @@
 26/01 : traitement d1.sh finis, il faut juste encore 2,3 ajustement sur le gnuplot.
 
 27/01 : traitement d2.sh fini, il faudra aussi ajuster le gnuplot
+
+29/01 : j'ai corriger d2.sh et grandement améliorer les graphique de d1 et d2 exemple : le graphique ,ainsi que les légende et le titre, sont à l'endroit.
