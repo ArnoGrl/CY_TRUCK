@@ -53,7 +53,7 @@ while [ "$#" -gt 0 ]; do
         validation=0
         ;;
     -d2)
-        d2
+        d2 "$fichier_entree"
         validation=0
         ;;
     -l)
