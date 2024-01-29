@@ -6,7 +6,7 @@ d1() {
     output_file="conducteur_counts.txt"
 
     # Compter les trajets par conducteur
-    time (awk -F';' '{print $6}' "$file" | sort | uniq -c | sort -rn | head -10 >"$output_file" && echo "La commande a pris $(date +%s.%N -d@$SECONDS) secondes")
+    awk -F';' '{print $6}' "$file" | sort | uniq -c | sort -rn | head -10 >"$output_file"
 
     gnuplot <<EOF
     
@@ -45,4 +45,7 @@ plot '$output_file' using 1:xticlabels(stringcolumn(2)." ".stringcolumn(3)) with
 EOF
 
     convert 'conducteur_counts.png' -rotate 90 d1.jpg
+    mv d1.jpg images/
+    rm conducteur_counts.txt
+    rm conducteur_counts.png
 }

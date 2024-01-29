@@ -49,11 +49,13 @@ validation=1
 while [ "$#" -gt 0 ]; do
     case "$1" in
     -d1)
-        d1 "$fichier_entree"
+        echo "Exécution du traitement d1..."
+        time d1 "$fichier_entree"
         validation=0
         ;;
     -d2)
-        d2 "$fichier_entree"
+        echo "Exécution du traitement d2..."
+        time d2 "$fichier_entree"
         validation=0
         ;;
     -l)
