@@ -2,31 +2,43 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_TRIPS 1000
-#define TOP_TRIPS 10
 #define LINE_LENGTH 256
+#define TOP_TRIPS 10
 
-typedef struct
+typedef struct Route
 {
     int routeID;
     float totalDistance;
+    int height;
+    struct Route *left, *right;
 } Route;
 
-int compareTotalDistance(const void *a, const void *b)
+// Prototypes des fonctions (ajoutez des déclarations ici pour une meilleure organisation)
+int max(int a, int b);
+int height(Route *N);
+Route *newNode(int routeID, float distance);
+Route *rightRotate(Route *y);
+Route *leftRotate(Route *x);
+int getBalance(Route *N);
+Route *insert(Route *node, int routeID, float distance);
+void findTopRoutes(Route *node, Route topRoutes[], int *index);
+void readCSVAndPopulateAVL(const char *filename);
+void freeTree(Route *node); // Ajout d'une fonction pour libérer la mémoire de l'arbre
+
+// ... (Implémentations des fonctions)
+
+// Libérer la mémoire de l'arbre AVL
+void freeTree(Route *node)
 {
-    Route *routeA = (Route *)a;
-    Route *routeB = (Route *)b;
-    return (routeB->totalDistance > routeA->totalDistance) - (routeA->totalDistance > routeB->totalDistance);
+    if (node != NULL)
+    {
+        freeTree(node->left);
+        freeTree(node->right);
+        free(node);
+    }
 }
 
-int compareRouteID(const void *a, const void *b)
-{
-    Route *routeA = (Route *)a;
-    Route *routeB = (Route *)b;
-    return routeA->routeID - routeB->routeID;
-}
-
-void l(const char *filename)
+void readCSVAndPopulateAVL(const char *filename)
 {
     FILE *file = fopen(filename, "r");
     if (file == NULL)
@@ -35,57 +47,39 @@ void l(const char *filename)
         exit(1);
     }
 
-    Route routes[MAX_TRIPS] = {0};
-    int routeCount = 0;
     char line[LINE_LENGTH];
-    fgets(line, sizeof(line), file); // Ignorer la première ligne (en-têtes)
+    Route *root = NULL;
+
+    fgets(line, sizeof(line), file); // Ignorer la première ligne
 
     while (fgets(line, sizeof(line), file))
     {
         int routeID;
         float distance;
-        sscanf(line, "%d;%*d;%*[^;];%*[^;];%f;%*s", &routeID, &distance);
-
-        int found = 0;
-        for (int i = 0; i < routeCount; i++)
+        if (sscanf(line, "%d;%*d;%*[^;];%*[^;];%f;%*s", &routeID, &distance) == 2)
         {
-            if (routes[i].routeID == routeID)
-            {
-                routes[i].totalDistance += distance;
-                found = 1;
-                break;
-            }
-        }
-
-        if (!found)
-        {
-            routes[routeCount].routeID = routeID;
-            routes[routeCount].totalDistance = distance;
-            routeCount++;
+            root = insert(root, routeID, distance);
         }
     }
     fclose(file);
 
-    qsort(routes, routeCount, sizeof(Route), compareTotalDistance);
-
-    Route topRoutes[TOP_TRIPS];
-    for (int i = 0; i < TOP_TRIPS && i < routeCount; i++)
-    {
-        topRoutes[i] = routes[i];
-    }
-
-    qsort(topRoutes, TOP_TRIPS, sizeof(Route), compareRouteID);
+    Route topRoutes[TOP_TRIPS] = {0};
+    int index = 0;
+    findTopRoutes(root, topRoutes, &index);
 
     FILE *outputFile = fopen("resultats.txt", "w");
     if (outputFile == NULL)
     {
         perror("Error opening output file");
+        freeTree(root); // Libérer la mémoire avant de quitter
         exit(1);
     }
 
-    for (int i = 0; i < TOP_TRIPS && i < routeCount; i++)
+    for (int i = 0; i < index; i++)
     {
         fprintf(outputFile, "Route ID: %d, Total Distance: %.2f\n", topRoutes[i].routeID, topRoutes[i].totalDistance);
     }
     fclose(outputFile);
+
+    freeTree(root); // Libérer la mémoire de l'arbre AVL
 }
