@@ -59,7 +59,8 @@ while [ "$#" -gt 0 ]; do
         validation=0
         ;;
     -l)
-        l
+        echo "Exécution du traitement l..."
+        l "$fichier_entree"
         validation=0
         ;;
     -t)

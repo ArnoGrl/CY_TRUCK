@@ -46,6 +46,6 @@ EOF
 
     convert 'trajet_count.png' -rotate 90 d2.jpg
     mv d2.jpg images/
-    rm total_distance.txt
+    #rm total_distance.txt
     rm trajet_count.png
 }
