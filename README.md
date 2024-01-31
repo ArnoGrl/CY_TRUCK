@@ -19,4 +19,4 @@
 
 30/01 : je suis completement bloquer tout fonctionne jusqu'a l'appele de la fonction l.c dans le script l.sh , il y a une erreur de segmentation, je n'arrive pas a la régler je rage quit
 
-31/01 : j'ai résolu le probleme traitement -l finis.
+31/01 : j'ai résolu le probleme traitement -l finis, juste le programme n'est pas parfait mais on pourra pas faire mieux.
