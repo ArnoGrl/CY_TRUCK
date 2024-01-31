@@ -1,22 +1,16 @@
-#ifndef AVL_H
-#define AVL_H
+#ifndef L_H
+#define L_H
 
-#include <stdio.h>
-#include <stdlib.h>
-
-#define LINE_LENGTH 256
-#define TOP_TRIPS 10
-
-// Définition de la structure Route
-typedef struct Route
+// Structure pour un nœud dans l'arbre AVL
+typedef struct route
 {
     int routeID;
     float totalDistance;
     int height;
-    struct Route *left, *right;
+    struct route *left, *right;
 } Route;
 
-// Prototypes de fonctions
+// Prototypes des fonctions
 int max(int a, int b);
 int height(Route *N);
 Route *newNode(int routeID, float distance);
@@ -25,7 +19,7 @@ Route *leftRotate(Route *x);
 int getBalance(Route *N);
 Route *insert(Route *node, int routeID, float distance);
 void findTopRoutes(Route *node, Route topRoutes[], int *index);
+void freeTree(Route *node);
 void readCSVAndPopulateAVL(const char *filename);
-void freeTree(Route *node); // Ajout d'une fonction pour libérer la mémoire de l'arbre
 
-#endif // AVL_H
+#endif

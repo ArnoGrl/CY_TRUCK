@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Iheader
-SRCDIR = source
+CFLAGS = -Wall -Iprogc/header
+SRCDIR = progc/source
 OBJDIR = obj
 BINDIR = bin
 EXECUTABLE = $(BINDIR)/progc
@@ -24,4 +24,3 @@ clean:
 	rm -rf $(OBJDIR) $(BINDIR)
 
 .PHONY: all clean
-

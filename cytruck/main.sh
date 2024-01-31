@@ -37,11 +37,11 @@ mkdir -p temporaire images data
 # Suppression des fichiers temporaires
 rm -f temporaire/*
 
-# Recuperer le nom du fichier sans le chemin absolu
-fichier_entree="$1"
-fichier_sortie=$(basename "$fichier_data_absolu")
+# Récupérer le nom du fichier sans le chemin absolu
+fichier_entree="$2"
+fichier_sortie=$(basename "$fichier_entree")
 
-# Copie du fichier dans le dossier data
+# Copier le fichier dans le dossier data
 cp "$fichier_entree" "data/${fichier_sortie}"
 
 # Choix des options

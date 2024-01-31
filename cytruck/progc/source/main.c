@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 // Inclusions des fichiers d'en-tête
@@ -8,28 +9,28 @@
 #include "../header/s.h"
 #include "../header/l.h"
 
-// La fonction 'l' doit être définie dans l'un de vos fichiers d'en-tête, probablement dans 'l.h'.
-
 int main(int argc, char const *argv[])
 {
-    if (argc != 3)
+    // Vérifier si le nombre d'arguments est suffisant
+    if (argc < 3)
     {
-        fprintf(stderr, "Utilisation: %s <fichier> <commande>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <option> <argument>\n", argv[0]);
         return 1;
     }
 
-    if (strcmp(argv[2], "-l") == 0)
+    if (strcmp(argv[1], "-l") == 0)
     {
-        readCSVAndPopulateAVL(argv[1]);
+        printf("Exécution avec l...\n");
+        readCSVAndPopulateAVL(argv[2]);
     }
-    else if (strcmp(argv[2], "-t") == 0)
+    else if (strcmp(argv[1], "-t") == 0)
     {
-        // Appelez la fonction correspondant à la commande -t
-        // t(argv[1]);
+        printf("Exécution avec t...\n");
+        t();
     }
     else
     {
-        fprintf(stderr, "Commande non reconnue: %s\n", argv[2]);
+        fprintf(stderr, "Option non reconnue : %s\n", argv[1]);
         return 1;
     }
 
