@@ -18,3 +18,5 @@
 30/01 : traitement -l commencer probleme avec l'éxécution de la fonction c, elle affiche uniquement le message D1. je dois finir de debboguer le probleme, le probleme précédent est gégler maintenant, j'ai une segmentation fault.
 
 30/01 : je suis completement bloquer tout fonctionne jusqu'a l'appele de la fonction l.c dans le script l.sh , il y a une erreur de segmentation, je n'arrive pas a la régler je rage quit
+
+31/01 : j'ai résolu le probleme traitement -l finis.
