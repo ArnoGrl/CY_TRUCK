@@ -10,12 +10,14 @@ Avant de commencer, assurez-vous que les outils suivants sont installés sur vot
 
     GnuPlot : pour la génération de graphiques.
     Bash : pour exécuter le script shell.
+    imagemagick : pour améliorer les graphique.
+    gawk : pour des fonction utiles pour le traitement de données.
 
-Vous pouvez installer GnuPlot via le gestionnaire de paquets de votre système d'exploitation.
+Vous pouvez installer tout ces outils via le gestionnaire de paquets de votre système d'exploitation, en écrivant ces commandes dans votre terminal.
 
 
     sudo apt-get update
-    sudo apt-get install gnuplot
+    sudo apt-get install bash gawk gnuplot imagemagick
 
 
 Installation
