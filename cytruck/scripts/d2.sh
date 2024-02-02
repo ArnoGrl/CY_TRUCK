@@ -46,6 +46,12 @@ EOF
 
     convert 'trajet_count.png' -rotate 90 d2.jpg
     mv d2.jpg images/
-    #rm total_distance.txt
+    rm total_distance.txt
     rm trajet_count.png
+
+    echo " "
+    echo "éxecution réussie"
+    echo "Graphique d2.jpg créer dans le dossier images/"
+    echo "retour au menu"
+    exit 0
 }

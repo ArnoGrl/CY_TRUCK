@@ -7,7 +7,7 @@ d1() {
 
     # Compter les trajets par conducteur
     awk -F';' '{print $6}' "$file" | sort | uniq -c | sort -rn | head -10 >"$output_file"
-
+    #creation du graphique avec GNU plot
     gnuplot <<EOF
     
 set terminal pngcairo enhanced font "arial,10" size 1200,1000
@@ -48,4 +48,11 @@ EOF
     mv d1.jpg images/
     rm conducteur_counts.txt
     rm conducteur_counts.png
+
+    echo " "
+    echo "éxecution réussie"
+    echo "Graphique d1.jpg créer dans le dossier images/"
+    echo "retour au menu"
+
+    exit 0
 }

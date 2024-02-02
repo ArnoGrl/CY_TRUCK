@@ -9,7 +9,7 @@ source scripts/s.sh
 
 # Fonction d'aide
 aide() {
-    echo "Usage: $0 [chemin/vers/fichier] [options]"
+    echo "Usage: $0 [options] [chemin/vers/fichier] "
     echo "Voici la list des options disponibles:"
     echo "  -h   : Affichee l'aide"
     echo "  -d1  : Affiche le conducteur avec le plus de trajets"
@@ -60,15 +60,17 @@ while [ "$#" -gt 0 ]; do
         ;;
     -l)
         echo "Exécution du traitement l..."
-        l "$fichier_entree"
+        time l "$fichier_entree"
         validation=0
         ;;
     -t)
-        t
+        echo "Exécution du traitement t..."
+        time t "$fichier_entree"
         validation=0
         ;;
     -s)
-        s
+        echo "Execution du traitement s..."
+        time s "$fichier_entree"
         validation=0
         ;;
     *)

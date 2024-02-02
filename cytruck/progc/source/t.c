@@ -5,205 +5,224 @@
 #define MAX_CITY_NAME 50
 #define MAX_LINE_LENGTH 1024
 
-typedef struct node {
-    char city_name[MAX_CITY_NAME];
-    int nbRoute;
-    int nbDeparture;
-    struct node* pLeft;
-    struct node* pRight;
-    int height;
-}Node;
-
-typedef struct cityStats {
-    char city_name[MAX_CITY_NAME];
-    int nbRoute;
-    int nbDeparture;
-} CityStats;
-
-Node* createNode(char city[MAX_CITY_NAME]){
-    Node* pNew = (Node*)malloc(sizeof(Node));
-    if(pNew == NULL){
-        printf("Erreur d'allocation mémoire\n");
+TownNode *createTownNode(char city[MAX_CITY_NAME])
+{
+    TownNode *newNode = (TownNode *)malloc(sizeof(TownNode));
+    if (newNode == NULL)
+    {
+        printf("Memory allocation error\n");
         exit(1);
     }
-    strcpy(pNew->city_name, city);
-    pNew->nbRoute = 1;
-    pNew->nbDeparture = 0;
-    pNew->pLeft = NULL;
-    pNew->pRight = NULL;
-    pNew->height = 1;
-    return pNew;
+    strcpy(newNode->name, city);
+    newNode->routeCount = 1;
+    newNode->departureCount = 0;
+    newNode->leftChild = NULL;
+    newNode->rightChild = NULL;
+    newNode->height = 1;
+    return newNode;
 }
 
-int max(int a, int b) {
+int getMax(int a, int b)
+{
     return (a > b) ? a : b;
 }
 
-int height(Node *N){
-    if (N == NULL)
+int getNodeHeight(TownNode *node)
+{
+    if (node == NULL)
         return 0;
-    return N->height;
+    return node->height;
 }
 
-Node* rightRotate(Node* y){
-    Node* x = y->pLeft;
-    Node* tmp = x->pRight;
+TownNode *rotateRight(TownNode *root)
+{
+    TownNode *newRoot = root->leftChild;
+    TownNode *transferNode = newRoot->rightChild;
 
-    x->pRight = y;
-    y->pLeft = tmp;
+    newRoot->rightChild = root;
+    root->leftChild = transferNode;
 
-    y->height = max(height(y->pLeft), height(y->pRight)) + 1;
-    x->height = max(height(x->pLeft), height(x->pRight)) + 1;
+    root->height = getMax(getNodeHeight(root->leftChild), getNodeHeight(root->rightChild)) + 1;
+    newRoot->height = getMax(getNodeHeight(newRoot->leftChild), getNodeHeight(newRoot->rightChild)) + 1;
 
-    return x;
+    return newRoot;
 }
 
-Node* leftRotate(Node* x){
-    Node* y = x->pRight;
-    Node* tmp = y->pLeft;
+TownNode *rotateLeft(TownNode *root)
+{
+    TownNode *newRoot = root->rightChild;
+    TownNode *transferNode = newRoot->leftChild;
 
-    y->pLeft = x;
-    x->pRight = tmp;
+    newRoot->leftChild = root;
+    root->rightChild = transferNode;
 
-    x->height = max(height(x->pLeft), height(x->pRight)) + 1;
-    y->height = max(height(y->pLeft), height(y->pRight)) + 1;
+    root->height = getMax(getNodeHeight(root->leftChild), getNodeHeight(root->rightChild)) + 1;
+    newRoot->height = getMax(getNodeHeight(newRoot->leftChild), getNodeHeight(newRoot->rightChild)) + 1;
 
-    return y;
+    return newRoot;
 }
 
-int getBalance(Node* N){
-    if (N == NULL)
+int getBalanceFactor(TownNode *node)
+{
+    if (node == NULL)
         return 0;
-    return height(N->pLeft) - height(N->pRight);
+    return getNodeHeight(node->leftChild) - getNodeHeight(node->rightChild);
 }
 
-void freeTree(Node *node){
-    if (node != NULL){
-        freeTree(node->pLeft);
-        freeTree(node->pRight);
-        free(node);
+void destroyTownTree(TownNode *root)
+{
+    if (root != NULL)
+    {
+        destroyTownTree(root->leftChild);
+        destroyTownTree(root->rightChild);
+        free(root);
     }
 }
 
-Node* insertNode(Node* node, char city[MAX_CITY_NAME], int nbR, int nbD) {
-    if (node == NULL){
-        return(createNode(city));
+TownNode *insertTownData(TownNode *root, char city[MAX_CITY_NAME], int routes, int departures)
+{
+    if (root == NULL)
+    {
+        return (createTownNode(city));
     }
-    if (strcmp(city, node->city_name) < 0) {
-        node->pLeft = insertNode(node->pLeft, city, nbR, nbD);
-    } else if (strcmp(city, node->city_name) > 0) {
-        node->pRight = insertNode(node->pRight, city, nbR, nbD);
-    } else {
-        node->nbRoute += nbR;
-        node->nbDeparture += nbD;
-        return node; 
+    if (strcmp(city, root->name) < 0)
+    {
+        root->leftChild = insertTownData(root->leftChild, city, routes, departures);
     }
-
-    node->height = 1 + max(height(node->pLeft), height(node->pRight));
-
-    int balance = getBalance(node);
-
-    // Rotations pour rééquilibrer l'arbre
-    if (balance > 1 && strcmp(city, node->pLeft->city_name) < 0) {
-        return rightRotate(node);
+    else if (strcmp(city, root->name) > 0)
+    {
+        root->rightChild = insertTownData(root->rightChild, city, routes, departures);
     }
-    if (balance < -1 && strcmp(city, node->pRight->city_name) > 0) {
-        return leftRotate(node);
-    }
-    if (balance > 1 && strcmp(city, node->pLeft->city_name) > 0) {
-        node->pLeft = leftRotate(node->pLeft);
-        return rightRotate(node);
-    }
-    if (balance < -1 && strcmp(city, node->pRight->city_name) < 0) {
-        node->pRight = rightRotate(node->pRight);
-        return leftRotate(node);
+    else
+    {
+        root->routeCount += routes;
+        root->departureCount += departures;
+        return root;
     }
 
-    return node;
+    root->height = 1 + getMax(getNodeHeight(root->leftChild), getNodeHeight(root->rightChild));
+
+    int balance = getBalanceFactor(root);
+
+    // Rotations for rebalancing
+    if (balance > 1 && strcmp(city, root->leftChild->name) < 0)
+    {
+        return rotateRight(root);
+    }
+    if (balance < -1 && strcmp(city, root->rightChild->name) > 0)
+    {
+        return rotateLeft(root);
+    }
+    if (balance > 1 && strcmp(city, root->leftChild->name) > 0)
+    {
+        root->leftChild = rotateLeft(root->leftChild);
+        return rotateRight(root);
+    }
+    if (balance < -1 && strcmp(city, root->rightChild->name) < 0)
+    {
+        root->rightChild = rotateRight(root->rightChild);
+        return rotateLeft(root);
+    }
+
+    return root;
 }
 
-void collectCityStats(Node* node, CityStats** stats, int* size, int* capacity) {
-    if (node == NULL) return;
+void compileTownStatistics(TownNode *root, TownStatistics **stats, int *size, int *capacity)
+{
+    if (root == NULL)
+        return;
 
-    if (*size >= *capacity) {
+    if (*size >= *capacity)
+    {
         *capacity *= 2;
-        *stats = (CityStats*)realloc(*stats, (*capacity) * sizeof(CityStats));
-        if (*stats == NULL) {
-            perror("Erreur de reallocation");
+        *stats = (TownStatistics *)realloc(*stats, (*capacity) * sizeof(TownStatistics));
+        if (*stats == NULL)
+        {
+            perror("Reallocation error");
             exit(EXIT_FAILURE);
         }
     }
 
-    collectCityStats(node->pLeft, stats, size, capacity);
+    compileTownStatistics(root->leftChild, stats, size, capacity);
 
-    CityStats* currentStat = &((*stats)[*size]);
-    strcpy(currentStat->city_name, node->city_name);
-    currentStat->nbRoute = node->nbRoute;
-    currentStat->nbDeparture = node->nbDeparture;
+    TownStatistics *currentStat = &((*stats)[*size]);
+    strcpy(currentStat->name, root->name);
+    currentStat->routeCount = root->routeCount;
+    currentStat->departureCount = root->departureCount;
     (*size)++;
 
-    collectCityStats(node->pRight, stats, size, capacity);
+    compileTownStatistics(root->rightChild, stats, size, capacity);
 }
 
-int compareNbRoute(const void* a, const void* b) {
-    CityStats* cityA = (CityStats*)a;
-    CityStats* cityB = (CityStats*)b;
-    return cityB->nbRoute - cityA->nbRoute;
+int compareRouteCount(const void *a, const void *b)
+{
+    TownStatistics *statA = (TownStatistics *)a;
+    TownStatistics *statB = (TownStatistics *)b;
+    return statB->routeCount - statA->routeCount;
 }
 
-int compareCityName(const void* a, const void* b) {
-    CityStats* cityA = (CityStats*)a;
-    CityStats* cityB = (CityStats*)b;
-    return strcmp(cityA->city_name, cityB->city_name);
-}
-
-void writeTopCitiesToFile(CityStats* stats, int totalCities, const char* filename) {
-    FILE* file = fopen(filename, "w");
-    if (!file) {
-        perror("Erreur lors de l'ouverture du fichier");
-        return;
-    }
-
-    qsort(stats, totalCities, sizeof(CityStats), compareNbRoute);
-
-    int topCities = totalCities > 10 ? 10 : totalCities;
-
-    qsort(stats, topCities, sizeof(CityStats), compareCityName);
-
-    for (int i = 0; i < topCities; i++) {
-        fprintf(file, "%s, %d, %d\n", stats[i].city_name, stats[i].nbRoute, stats[i].nbDeparture);
-    }
-
-    fclose(file);
-}
-
-void readCSVandPopulateAVL(const char* filename) {
-    FILE* file = fopen(filename, "r");
-    if (!file) {
-        perror("Erreur lors de l'ouverture du fichier");
+void processCSVandBuildTree(const char *filename)
+{
+    FILE *file = fopen(filename, "r");
+    if (!file)
+    {
+        perror("File opening error");
         return;
     }
 
     char line[MAX_LINE_LENGTH];
-    Node* node = NULL;
-   
+    TownNode *root = NULL;
+
+    // Skip header line
     fgets(line, sizeof(line), file);
 
-    while (fgets(line, sizeof(line), file)) {
+    while (fgets(line, sizeof(line), file))
+    {
         char departure_city[MAX_CITY_NAME], arrival_city[MAX_CITY_NAME];
-        if (sscanf(line, "%*d,%*d,%[^,],%[^,],%*d,%*s", departure_city, arrival_city) == 2) {
-            node = insertNode(node, departure_city, 1, 1);
-            node = insertNode(node, arrival_city, 1, 0);
+        if (sscanf(line, "%*d,%*d,%[^,],%[^,],%*d,%*s", departure_city, arrival_city) == 2)
+        {
+            root = insertTownData(root, departure_city, 1, 1);
+            root = insertTownData(root, arrival_city, 1, 0);
         }
     }
     fclose(file);
 
-    CityStats* stats = (CityStats*)malloc(1 * sizeof(CityStats));
-    int size = 10;
-    int capacity = 1;
-    collectCityStats(node, &stats, &size, &capacity);
-    writeTopCitiesToFile(stats, size, "top_cities.txt");
+    TownStatistics *stats = (TownStatistics *)malloc(1 * sizeof(TownStatistics));
+    int size = 0;     // Initialize size to 0 for accurate statistics collection
+    int capacity = 1; // Start with a capacity of 1 and dynamically increase as needed
+    compileTownStatistics(root, &stats, &size, &capacity);
+    generateTopTownReport(stats, size, "top_towns.txt");
 
     free(stats);
-    freeTree(node);
+    destroyTownTree(root);
+}
+
+int compareTownName(const void *a, const void *b)
+{
+    TownStatistics *statA = (TownStatistics *)a;
+    TownStatistics *statB = (TownStatistics *)b;
+    return strcmp(statA->name, statB->name);
+}
+
+void generateTopTownReport(TownStatistics *stats, int totalTowns, const char *filename)
+{
+    FILE *file = fopen(filename, "w");
+    if (!file)
+    {
+        perror("File opening error");
+        return;
+    }
+
+    qsort(stats, totalTowns, sizeof(TownStatistics), compareRouteCount);
+
+    int topTowns = totalTowns > 10 ? 10 : totalTowns;
+
+    qsort(stats, topTowns, sizeof(TownStatistics), compareTownName);
+
+    for (int i = 0; i < topTowns; i++)
+    {
+        fprintf(file, "%s, %d, %d\n", stats[i].name, stats[i].routeCount, stats[i].departureCount);
+    }
+
+    fclose(file);
 }
