@@ -85,6 +85,7 @@ TownNode *insertTownData(TownNode *root, char city[MAX_CITY_NAME], int isDepartu
     {
         return (createTownNode(city));
     }
+    //compares strings to insert
     if (strcmp(city, root->name) < 0)
     {
         root->leftChild = insertTownData(root->leftChild, city, isDeparture);
@@ -134,9 +135,10 @@ void compileTownStatistics(TownNode *root, TownStatistics **stats, int *size, in
 {
     if (root == NULL)
         return;
-
+     // check if board needs to be enlarged
     if (*size >= *capacity)
     {
+        // Doubling capacity to reduce allocation frequency
         *capacity *= 2;
         *stats = (TownStatistics *)realloc(*stats, (*capacity) * sizeof(TownStatistics));
         if (*stats == NULL)
