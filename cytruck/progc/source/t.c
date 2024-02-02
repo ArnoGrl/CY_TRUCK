@@ -79,7 +79,7 @@ void destroyTownTree(TownNode *root)
     }
 }
 
-TownNode *insertTownData(TownNode *root, char city[MAX_CITY_NAME], int routes, int departures)
+TownNode *insertTownData(TownNode *root, char city[MAX_CITY_NAME], int isDeparture)
 {
     if (root == NULL)
     {
@@ -87,17 +87,20 @@ TownNode *insertTownData(TownNode *root, char city[MAX_CITY_NAME], int routes, i
     }
     if (strcmp(city, root->name) < 0)
     {
-        root->leftChild = insertTownData(root->leftChild, city, routes, departures);
+        root->leftChild = insertTownData(root->leftChild, city, isDeparture);
     }
     else if (strcmp(city, root->name) > 0)
     {
-        root->rightChild = insertTownData(root->rightChild, city, routes, departures);
+        root->rightChild = insertTownData(root->rightChild, city, isDeparture);
     }
     else
     {
-        root->routeCount += routes;
-        root->departureCount += departures;
-        return root;
+        // If the city is a departure city
+        if (isDeparture) {
+            node->nbDeparture += 1;
+        }
+        // Update the number of route passes through the city
+        node->nbRoute += 1;
     }
 
     root->height = 1 + getMax(getNodeHeight(root->leftChild), getNodeHeight(root->rightChild));
@@ -181,8 +184,8 @@ void processCSVandBuildTree(const char *filename)
         char departure_city[MAX_CITY_NAME], arrival_city[MAX_CITY_NAME];
         if (sscanf(line, "%*d;%*d;%[^;];%[^;];%*d;%*s", departure_city, arrival_city) == 2)
         {
-            root = insertTownData(root, departure_city, 1, 1);
-            root = insertTownData(root, arrival_city, 1, 0);
+            root = insertTownData(root, departure_city, 1);
+            root = insertTownData(root, arrival_city, 0);
         }
     }
     fclose(file);
