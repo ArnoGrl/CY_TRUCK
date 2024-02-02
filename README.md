@@ -34,7 +34,7 @@ Configuration
 
 Accordez les permissions nécessaires au script pour permettre son exécution :
 
-chmod +x main.sh
+    chmod +x main.sh
 
 
 
@@ -43,7 +43,7 @@ Utilisation
 Pour exécuter le programme, utilisez la commande suivante dans votre terminal, en remplaçant [CHEMIN_VERS_FICHIER_CSV] par le chemin réel vers votre fichier CSV.
 
 
-./main.sh  [OPTION] [CHEMIN_VERS_FICHIER_CSV]
+    ./main.sh  [OPTION] [CHEMIN_VERS_FICHIER_CSV]
 
 Options
 
