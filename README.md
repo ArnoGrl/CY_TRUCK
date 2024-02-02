@@ -1,6 +1,7 @@
 # CY_TRUCK
 
 Guide d'utilisation de CY Truck
+
 Introduction
 
 CY Truck est un programme conçu pour gérer les données logistiques d'une entreprise nationale de transport routier. Ce script shell main.sh automatise l'analyse de fichiers de données CSV et génère des graphiques utiles pour résumer les activités de l'entreprise.
