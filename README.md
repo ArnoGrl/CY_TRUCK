@@ -1,22 +1,58 @@
 # CY_TRUCK
-27/12 : j'ai éffectuer un premier dépot, dans le data il y a ce que j'ai commencé pour le D1. pour l'éxécuter il faut ajouter le fichier data.CSV dans data et executer le script en le mettant en argumant.
 
-28/12 : j'ai modifier un peu D1.sh, mais le script n'est toujours pas finis.
+Guide d'utilisation de CY Truck
+Introduction
 
-30/12 : J'ai ajouté une première version du code main en shell qui prend en compte les différents arguments. Il n'est pas fini et il va falloir le modifier.
+CY Truck est un programme conçu pour gérer les données logistiques d'une entreprise nationale de transport routier. Ce script shell main.sh automatise l'analyse de fichiers de données CSV et génère des graphiques utiles pour résumer les activités de l'entreprise.
+Prérequis
 
-05/01 : nous n'avons pas travailler sur le projet durant ces derniers jours.
+Avant de commencer, assurez-vous que les outils suivants sont installés sur votre système :
 
-26/01 : modification de la structure main.sh, il faut maintenant faire tout les traitement.
+    GnuPlot : pour la génération de graphiques.
+    Bash : pour exécuter le script shell.
 
-26/01 : traitement d1.sh finis, il faut juste encore 2,3 ajustement sur le gnuplot.
+Vous pouvez installer GnuPlot via le gestionnaire de paquets de votre système d'exploitation.
 
-27/01 : traitement d2.sh fini, il faudra aussi ajuster le gnuplot
 
-29/01 : j'ai corriger d2.sh et grandement améliorer les graphique de d1 et d2 exemple : le graphique ,ainsi que les légende et le titre, sont à l'endroit. j'ai également fais en sorte que les fichier temporaires soit supprimmer après l'utilisation des traitement, que les rendu images soit déplacer dans le dossier images, et qu'on connaissent le temp d'éxécution de chaque traitement.
+Installation
 
-30/01 : traitement -l commencer probleme avec l'éxécution de la fonction c, elle affiche uniquement le message D1. je dois finir de debboguer le probleme, le probleme précédent est gégler maintenant, j'ai une segmentation fault.
+Clonez le dépôt du projet :
 
-30/01 : je suis completement bloquer tout fonctionne jusqu'a l'appele de la fonction l.c dans le script l.sh , il y a une erreur de segmentation, je n'arrive pas a la régler je rage quit
+	git clone [URL_DU_DEPOT]
 
-31/01 : j'ai résolu le probleme traitement -l finis, juste le programme n'est pas parfait mais on pourra pas faire mieux.
+Naviguez jusqu'au répertoire du projet cloné :
+
+
+
+    	cd [NOM_DU_REPERTOIRE]
+
+Configuration
+
+Accordez les permissions nécessaires au script pour permettre son exécution :
+
+chmod +x main.sh
+
+
+
+Utilisation
+
+Pour exécuter le programme, utilisez la commande suivante dans votre terminal, en remplaçant [CHEMIN_VERS_FICHIER_CSV] par le chemin réel vers votre fichier CSV.
+
+
+./main.sh  [OPTION] [CHEMIN_VERS_FICHIER_CSV]
+
+Options
+
+Le script supporte plusieurs options qui déterminent le type de traitement à effectuer :
+
+    -h : Affiche un message d'aide avec les options disponibles.
+    -d1 : Génère un histogramme horizontal des 10 conducteurs ayant effectué le plus de trajets.
+    -d2 : Produit un histogramme horizontal de la distance totale parcourue par les conducteurs.
+    -l : Crée un histogramme vertical des 10 trajets les plus longs.
+    -t : Compte le nombre de trajets passant par chaque ville et génère un histogramme groupé.
+    -s : Collecte des statistiques sur les étapes de chaque trajet et crée un graphique de courbes.
+
+Interprétation des Résultats
+
+Après exécution, le script génère des graphiques qui sont sauvegardés dans le répertoire images et peuvent être consultés pour l'analyse.
+
