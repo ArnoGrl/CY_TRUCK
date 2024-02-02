@@ -14,17 +14,21 @@ Avant de commencer, assurez-vous que les outils suivants sont installés sur vot
 Vous pouvez installer GnuPlot via le gestionnaire de paquets de votre système d'exploitation.
 
 
+sudo apt-get update
+sudo apt-get install gnuplot
+
+
 Installation
 
 Clonez le dépôt du projet :
 
-	git clone [URL_DU_DEPOT]
+git clone [URL_DU_DEPOT]
 
 Naviguez jusqu'au répertoire du projet cloné :
 
 
 
-    	cd [NOM_DU_REPERTOIRE]
+cd [NOM_DU_REPERTOIRE]
 
 Configuration
 
