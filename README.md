@@ -64,4 +64,7 @@ Interprétation des Résultats
 Après exécution, le script génère des graphiques qui sont sauvegardés dans le répertoire images et peuvent être consultés.
 
 ATTENTION : Chaque traitement doit être exécuté individuellement, le programme ne peut exécuter qu'un traitement à la fois.
+ATTENTION : Problème avec l'option -t. Le programme en C fonctionnait sur l'ordinateur de Matisse Jacquet. Malheureusement, dans le projet final, le programme affiche une erreur d'allocation de mémoire que nous avons pas réussi à résoudre.
+
+            
 
