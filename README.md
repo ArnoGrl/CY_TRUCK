@@ -60,3 +60,5 @@ Interprétation des Résultats
 
 Après exécution, le script génère des graphiques qui sont sauvegardés dans le répertoire images et peuvent être consultés pour l'analyse.
 
+ATTENTION : Chaque traitement doit être exécuté individuellement, le programme ne peut exécuter qu'un traitement à la fois.
+
