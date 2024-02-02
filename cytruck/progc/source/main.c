@@ -28,9 +28,9 @@ int main(int argc, char const *argv[])
     }
     else if (strcmp(argv[1], "-t") == 0)
     {
-        processCSVandBuildTree(argv[2]);
         printf("Malheuresement nous n'avons pas pu finir le traitement -t dans le temp impartie.\nnous l'avons pourtant commencé (voir t.c, t.sh)\n\n");
-    }
+        processCSVandBuildTree(argv[2]);
+        }
     else if (strcmp(argv[1], "-s") == 0)
     {
 
