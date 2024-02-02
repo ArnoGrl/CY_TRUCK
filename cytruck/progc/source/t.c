@@ -179,7 +179,7 @@ void processCSVandBuildTree(const char *filename)
     while (fgets(line, sizeof(line), file))
     {
         char departure_city[MAX_CITY_NAME], arrival_city[MAX_CITY_NAME];
-        if (sscanf(line, "%*d,%*d,%[^,],%[^,],%*d,%*s", departure_city, arrival_city) == 2)
+        if (sscanf(line, "%*d;%*d;%[^;];%[^;];%*d;%*s", departure_city, arrival_city) == 2)
         {
             root = insertTownData(root, departure_city, 1, 1);
             root = insertTownData(root, arrival_city, 1, 0);
