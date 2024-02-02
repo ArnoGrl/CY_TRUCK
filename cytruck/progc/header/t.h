@@ -31,7 +31,7 @@ TownNode *rotateRight(TownNode *root);
 TownNode *rotateLeft(TownNode *root);
 int getBalanceFactor(TownNode *node);
 void destroyTownTree(TownNode *root);
-TownNode *insertTownData(TownNode *root, char city[MAX_CITY_NAME], int routes, int departures);
+TownNode *insertTownData(TownNode *root, char city[MAX_CITY_NAME], int isDeparture);
 void compileTownStatistics(TownNode *root, TownStatistics **stats, int *size, int *capacity);
 int compareRouteCount(const void *a, const void *b);
 int compareTownName(const void *a, const void *b);
